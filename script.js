@@ -14,7 +14,7 @@ const CONFIG = {
   letter: {
     heading: "Mi amor por ti florece cada día",
     // Nombre del archivo de foto subido en la misma carpeta (o URL web)
-    photoUrl: "foto.jpg",
+    photoUrl: "foto.jpeg",
     photoCaption: "Tú y Yo ❤️",
     // Párrafos románticos de la carta
     paragraphs: [
