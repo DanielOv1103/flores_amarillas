@@ -1,0 +1,586 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <title>Campo de Flores Amarillas Para Ti 🌻</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@700;900&family=Dancing+Script:wght@600;700&family=Montserrat:wght@400;500;600;700&family=Playfair+Display:ital,wght@0,700;1,400;1,600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <!-- Canvas de estrellas, polen dorado y lluvia de pétalos -->
+  <canvas id="particles-canvas"></canvas>
+
+  <!-- Audio HTML conectado a audio.mp3 con preload y loop -->
+  <audio id="bgAudio" src="audio.mp3" loop preload="auto" playsinline></audio>
+
+  <!-- Botón Flotante: Sobre de Carta Postal Real 💌 -->
+  <button class="floating-envelope-btn" id="openLetterBtn" title="Abrir carta especial" aria-label="Abrir carta romántica">
+    <div class="envelope-glow"></div>
+    <div class="envelope-card-container">
+      <!-- Hoja de papel rayada asomándose del sobre -->
+      <div class="envelope-paper-peek">
+        <div class="peek-line"></div>
+        <div class="peek-line short"></div>
+        <div class="peek-heart">💛</div>
+      </div>
+      <!-- Cuerpo del sobre con solapa triangular y sello -->
+      <div class="envelope-structure">
+        <div class="envelope-back"></div>
+        <div class="envelope-pocket"></div>
+        <div class="envelope-flap"></div>
+        <div class="envelope-wax-seal">
+          <span class="wax-heart">❤️</span>
+        </div>
+      </div>
+    </div>
+    <div class="envelope-label">
+      <span>Carta para ti</span>
+    </div>
+  </button>
+
+  <main class="garden-container">
+    
+    <!-- Encabezado con textos elegantes (Ubicado casi al centro) -->
+    <header class="text-container" id="textContainer">
+      <p class="pre-title" id="preTitle">Hoy florece para ti</p>
+      <h1 class="main-title" id="mainTitle">FLORES AMARILLAS</h1>
+      <div class="name-wrapper">
+        <h2 class="recipient-name" id="recipientName">Mi Amor</h2>
+        <span class="heart-icon">❤️</span>
+      </div>
+      <p class="dedication-text" id="dedicationText">Para recordarte lo increíble que eres y cómo iluminas mi vida cada día, tal como un girasol busca la luz del sol. 🌻✨</p>
+    </header>
+
+    <!-- ESCENARIO: CAMPO AL RAS DE ABAJO (0 ESPACIO NEGRO INFERIOR) -->
+    <div class="botanical-scene" id="scene">
+      
+      <!-- Halo solar radiante detrás del girasol -->
+      <div class="sun-aura"></div>
+
+      <!-- Semilla dorada mágica que cae y fecunda la tierra -->
+      <div class="seed-container" id="seedContainer">
+        <div class="magic-seed" id="magicSeed">
+          <div class="seed-glow"></div>
+        </div>
+      </div>
+
+      <!-- PRADERA / PASTO COMPLETO AL RAS DE ABAJO -->
+      <div class="field-ground">
+        <div class="hill hill-back"></div>
+        <div class="hill hill-mid"></div>
+        
+        <!-- Césped frontal con briznas de hierba silueteadas -->
+        <div class="hill hill-front">
+          <svg class="grass-svg" viewBox="0 0 1440 60" preserveAspectRatio="none">
+            <path d="M0 60 L0 32 Q15 8 28 35 Q42 12 55 36 Q70 6 85 38 Q100 15 115 38 Q130 10 145 40 Q160 18 175 38 Q190 8 205 40 Q220 15 235 38 Q250 6 265 40 Q280 16 295 38 Q310 10 325 40 Q340 18 355 38 Q370 8 385 40 Q400 14 415 38 Q430 8 445 40 Q460 16 475 38 Q490 6 505 40 Q520 14 535 38 Q550 8 565 40 Q580 18 595 38 Q610 6 625 40 Q640 15 655 38 Q670 10 685 40 Q700 18 715 38 Q730 8 745 40 Q760 14 775 38 Q790 6 805 40 Q820 16 835 38 Q850 10 865 40 Q880 18 895 38 Q910 8 925 40 Q940 14 955 38 Q970 6 985 40 Q1000 16 1015 38 Q1030 10 1045 40 Q1060 18 1075 38 Q1090 8 1105 40 Q1120 14 1135 38 Q1150 6 1165 40 Q1180 16 1195 38 Q1210 10 1225 40 Q1240 18 1255 38 Q1270 8 1285 40 Q1300 14 1315 38 Q1330 6 1345 40 Q1360 16 1375 38 Q1390 10 1405 40 Q1420 18 1435 38 L1440 60 Z" fill="#133d16" />
+            <path d="M0 60 L0 40 Q22 18 40 44 Q58 14 78 45 Q96 12 114 46 Q134 20 152 45 Q172 15 190 47 Q210 20 228 45 Q248 14 266 47 Q286 18 304 45 Q324 12 342 46 Q362 20 380 45 Q400 15 418 47 Q438 18 456 45 Q476 12 494 46 Q514 20 532 45 Q552 15 570 47 Q590 18 608 45 Q628 12 646 46 Q666 20 684 45 Q704 15 722 47 Q742 18 760 45 Q780 12 798 46 Q818 20 836 45 Q856 15 874 47 Q894 18 912 45 Q932 12 950 46 Q970 20 988 45 Q1008 15 1026 47 Q1046 18 1064 45 Q1084 12 1102 46 Q1122 20 1140 45 Q1160 15 1178 47 Q1198 18 1216 45 Q1236 12 1254 46 Q1274 20 1292 45 Q1312 15 1330 47 Q1350 18 1368 45 Q1388 12 1406 46 Q1426 20 1440 45 L1440 60 Z" fill="#1b531f" />
+          </svg>
+        </div>
+
+        <div class="soil-glow"></div>
+
+        <!-- 12 FLORES SILVESTRES AMARILLAS EN EL CÉSPED -->
+        <div class="meadow-flowers">
+          <div class="wf-item wf-p1"><div class="wf-stem"></div><div class="wf-bloom"></div></div>
+          <div class="wf-item wf-p2"><div class="wf-stem"></div><div class="wf-bloom"></div></div>
+          <div class="wf-item wf-p3"><div class="wf-stem"></div><div class="wf-bloom"></div></div>
+          <div class="wf-item wf-p4"><div class="wf-stem"></div><div class="wf-bloom"></div></div>
+          <div class="wf-item wf-p5"><div class="wf-stem"></div><div class="wf-bloom"></div></div>
+          <div class="wf-item wf-p6"><div class="wf-stem"></div><div class="wf-bloom"></div></div>
+          <div class="wf-item wf-p7"><div class="wf-stem"></div><div class="wf-bloom"></div></div>
+          <div class="wf-item wf-p8"><div class="wf-stem"></div><div class="wf-bloom"></div></div>
+          <div class="wf-item wf-p9"><div class="wf-stem"></div><div class="wf-bloom"></div></div>
+          <div class="wf-item wf-p10"><div class="wf-stem"></div><div class="wf-bloom"></div></div>
+          <div class="wf-item wf-p11"><div class="wf-stem"></div><div class="wf-bloom"></div></div>
+          <div class="wf-item wf-p12"><div class="wf-stem"></div><div class="wf-bloom"></div></div>
+        </div>
+      </div>
+
+      <!-- SISTEMA DE CRECIMIENTO: 11 FLORES PRINCIPALES ENRAIZADAS EN EL CAMPO -->
+      <div class="garden-growth" id="gardenGrowth">
+        
+        <!-- Flor 1: Rosa Amarilla Borde Extremo Izquierdo -->
+        <div class="plant-group plant-p1">
+          <div class="stem stem-rose-out">
+            <div class="leaf leaf-l1"></div>
+            <div class="flower-anchor">
+              <div class="flower-head rose-head">
+                <svg class="rose-svg" viewBox="0 0 100 100">
+                  <defs>
+                    <radialGradient id="rGrad1" cx="50%" cy="50%" r="50%">
+                      <stop offset="0%" stop-color="#fff8b3"/><stop offset="35%" stop-color="#ffd500"/><stop offset="75%" stop-color="#f59e0b"/><stop offset="100%" stop-color="#b45309"/>
+                    </radialGradient>
+                    <linearGradient id="rPetalSoft1" x1="0%" y1="0%" x2="0%" y2="100%">
+                      <stop offset="0%" stop-color="#fffdf0"/><stop offset="35%" stop-color="#fff066"/><stop offset="75%" stop-color="#ffb703"/><stop offset="100%" stop-color="#f59e0b"/>
+                    </linearGradient>
+                    <linearGradient id="rPetalSoft2" x1="0%" y1="100%" x2="0%" y2="0%">
+                      <stop offset="0%" stop-color="#d97706"/><stop offset="45%" stop-color="#f59e0b"/><stop offset="85%" stop-color="#fef08a"/><stop offset="100%" stop-color="#fffdf0"/>
+                    </linearGradient>
+                  </defs>
+                  <path d="M50 78 Q30 96 18 100 Q34 85 44 75 Z" fill="#2d6a24"/>
+                  <path d="M50 78 Q70 96 82 100 Q66 85 56 75 Z" fill="#2d6a24"/>
+                  <path d="M50 12 C32 12 16 26 20 46 C24 64 36 78 50 78 C64 78 76 64 80 46 C84 26 68 12 50 12 Z" fill="url(#rPetalSoft1)"/>
+                  <path d="M22 38 C14 54 22 74 42 76 C32 68 28 54 22 38 Z" fill="url(#rPetalSoft2)"/>
+                  <path d="M78 38 C86 54 78 74 58 76 C68 68 72 54 78 38 Z" fill="url(#rPetalSoft2)"/>
+                  <path d="M30 52 C34 72 66 72 70 52 C60 64 40 64 30 52 Z" fill="url(#rPetalSoft1)"/>
+                  <path d="M32 36 C34 24 66 24 68 36 C70 52 60 62 50 62 C40 62 30 52 32 36 Z" fill="#ffd000"/>
+                  <circle cx="50" cy="42" r="16" fill="url(#rGrad1)"/>
+                  <path d="M42 38 C44 30 56 30 58 38 C60 46 52 52 46 48 C42 45 46 39 50 40 C54 41 54 45 51 46" fill="none" stroke="#fffdf0" stroke-width="2.5" stroke-linecap="round"/>
+                </svg>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Flor 2: Margarita / Girasol Silvestre Izquierdo -->
+        <div class="plant-group plant-p2">
+          <div class="stem stem-wild-l">
+            <div class="leaf leaf-r1"></div>
+            <div class="flower-anchor">
+              <div class="flower-head wild-head">
+                <svg class="wild-sunflower-svg" viewBox="0 0 100 100">
+                  <defs>
+                    <radialGradient id="wildCenterGrad" cx="50%" cy="50%" r="50%">
+                      <stop offset="0%" stop-color="#78350f"/><stop offset="70%" stop-color="#451a03"/><stop offset="100%" stop-color="#1e0b02"/>
+                    </radialGradient>
+                    <linearGradient id="wildPetalGrad" x1="0%" y1="100%" x2="0%" y2="0%">
+                      <stop offset="0%" stop-color="#f59e0b"/><stop offset="50%" stop-color="#fbbf24"/><stop offset="100%" stop-color="#fef08a"/>
+                    </linearGradient>
+                  </defs>
+                  <g fill="url(#wildPetalGrad)">
+                    <ellipse cx="50" cy="18" rx="7" ry="18"/>
+                    <ellipse cx="50" cy="18" rx="7" ry="18" transform="rotate(25.7 50 50)"/>
+                    <ellipse cx="50" cy="18" rx="7" ry="18" transform="rotate(51.4 50 50)"/>
+                    <ellipse cx="50" cy="18" rx="7" ry="18" transform="rotate(77.1 50 50)"/>
+                    <ellipse cx="50" cy="18" rx="7" ry="18" transform="rotate(102.8 50 50)"/>
+                    <ellipse cx="50" cy="18" rx="7" ry="18" transform="rotate(128.5 50 50)"/>
+                    <ellipse cx="50" cy="18" rx="7" ry="18" transform="rotate(154.2 50 50)"/>
+                    <ellipse cx="50" cy="18" rx="7" ry="18" transform="rotate(180 50 50)"/>
+                    <ellipse cx="50" cy="18" rx="7" ry="18" transform="rotate(205.7 50 50)"/>
+                    <ellipse cx="50" cy="18" rx="7" ry="18" transform="rotate(231.4 50 50)"/>
+                    <ellipse cx="50" cy="18" rx="7" ry="18" transform="rotate(257.1 50 50)"/>
+                    <ellipse cx="50" cy="18" rx="7" ry="18" transform="rotate(282.8 50 50)"/>
+                    <ellipse cx="50" cy="18" rx="7" ry="18" transform="rotate(308.5 50 50)"/>
+                    <ellipse cx="50" cy="18" rx="7" ry="18" transform="rotate(334.2 50 50)"/>
+                  </g>
+                  <circle cx="50" cy="50" r="17" fill="url(#wildCenterGrad)"/>
+                  <circle cx="50" cy="50" r="16" fill="none" stroke="#f59e0b" stroke-dasharray="3 3" stroke-width="1.5"/>
+                </svg>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Flor 3: Tulipán Amarillo Izquierdo Medio -->
+        <div class="plant-group plant-p3">
+          <div class="stem stem-tulip-out">
+            <div class="leaf leaf-l2"></div>
+            <div class="flower-anchor">
+              <div class="flower-head tulip-head">
+                <svg class="tulip-svg" viewBox="0 0 100 120">
+                  <defs>
+                    <linearGradient id="tulipGradC" x1="0%" y1="100%" x2="0%" y2="0%">
+                      <stop offset="0%" stop-color="#f59e0b"/><stop offset="55%" stop-color="#fbbf24"/><stop offset="100%" stop-color="#fff8b3"/>
+                    </linearGradient>
+                    <linearGradient id="tulipGradW" x1="0%" y1="100%" x2="100%" y2="0%">
+                      <stop offset="0%" stop-color="#d97706"/><stop offset="40%" stop-color="#f59e0b"/><stop offset="85%" stop-color="#fde047"/><stop offset="100%" stop-color="#fffdf0"/>
+                    </linearGradient>
+                  </defs>
+                  <path d="M44 104 C44 114 56 114 56 104 Z" fill="#2d6a24"/>
+                  <path d="M50 16 C34 40 36 86 50 100 C64 86 66 40 50 16 Z" fill="url(#tulipGradC)"/>
+                  <path d="M50 100 C22 86 16 48 35 28 C45 40 48 72 50 100 Z" fill="url(#tulipGradW)"/>
+                  <path d="M50 100 C78 86 84 48 65 28 C55 40 52 72 50 100 Z" fill="url(#tulipGradW)"/>
+                  <path d="M36 38 C28 52 30 74 44 92" stroke="rgba(255,255,255,0.45)" stroke-width="2.8" fill="none" stroke-linecap="round"/>
+                </svg>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Flor 4: Rosa Amarilla Interior Izquierda -->
+        <div class="plant-group plant-p4">
+          <div class="stem stem-rose-in">
+            <div class="leaf leaf-l1"></div>
+            <div class="flower-anchor">
+              <div class="flower-head rose-head">
+                <svg class="rose-svg" viewBox="0 0 100 100">
+                  <path d="M50 78 Q30 96 18 100 Q34 85 44 75 Z" fill="#2d6a24"/>
+                  <path d="M50 78 Q70 96 82 100 Q66 85 56 75 Z" fill="#2d6a24"/>
+                  <path d="M50 12 C32 12 16 26 20 46 C24 64 36 78 50 78 C64 78 76 64 80 46 C84 26 68 12 50 12 Z" fill="url(#rPetalSoft1)"/>
+                  <path d="M22 38 C14 54 22 74 42 76 C32 68 28 54 22 38 Z" fill="url(#rPetalSoft2)"/>
+                  <path d="M78 38 C86 54 78 74 58 76 C68 68 72 54 78 38 Z" fill="url(#rPetalSoft2)"/>
+                  <path d="M30 52 C34 72 66 72 70 52 C60 64 40 64 30 52 Z" fill="url(#rPetalSoft1)"/>
+                  <path d="M32 36 C34 24 66 24 68 36 C70 52 60 62 50 62 C40 62 30 52 32 36 Z" fill="#ffd000"/>
+                  <circle cx="50" cy="42" r="16" fill="url(#rGrad1)"/>
+                  <path d="M42 38 C44 30 56 30 58 38 C60 46 52 52 46 48 C42 45 46 39 50 40 C54 41 54 45 51 46" fill="none" stroke="#fffdf0" stroke-width="2.5" stroke-linecap="round"/>
+                </svg>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Flor 5: Tulipán Amarillo Interior Izquierdo -->
+        <div class="plant-group plant-p5">
+          <div class="stem stem-tulip-in">
+            <div class="leaf leaf-l2"></div>
+            <div class="flower-anchor">
+              <div class="flower-head tulip-head">
+                <svg class="tulip-svg" viewBox="0 0 100 120">
+                  <path d="M44 104 C44 114 56 114 56 104 Z" fill="#2d6a24"/>
+                  <path d="M50 16 C34 40 36 86 50 100 C64 86 66 40 50 16 Z" fill="url(#tulipGradC)"/>
+                  <path d="M50 100 C22 86 16 48 35 28 C45 40 48 72 50 100 Z" fill="url(#tulipGradW)"/>
+                  <path d="M50 100 C78 86 84 48 65 28 C55 40 52 72 50 100 Z" fill="url(#tulipGradW)"/>
+                  <path d="M36 38 C28 52 30 74 44 92" stroke="rgba(255,255,255,0.45)" stroke-width="2.8" fill="none" stroke-linecap="round"/>
+                </svg>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Flor 6: EL ENORME GIRASOL CENTRAL (PERFECTAMENTE CONCÉNTRICO) -->
+        <div class="plant-group plant-sunflower">
+          <div class="stem stem-sunflower">
+            <div class="leaf leaf-sf-l1"></div>
+            <div class="leaf leaf-sf-r1"></div>
+            <div class="leaf leaf-sf-l2"></div>
+            <div class="leaf leaf-sf-r2"></div>
+            <div class="flower-anchor">
+              <div class="flower-head sunflower-head">
+                <div class="sunflower-halo"></div>
+                <div class="petals-layer petals-outer" id="sunflowerOuterPetals"></div>
+                <div class="petals-layer petals-middle" id="sunflowerMidPetals"></div>
+                <div class="petals-layer petals-inner" id="sunflowerInnerPetals"></div>
+                <div class="sunflower-corona"></div>
+                <div class="sunflower-center">
+                  <div class="seed-mesh"></div>
+                  <div class="seed-concentric-rings"></div>
+                  <div class="center-glow"></div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Flor 7: Tulipán Amarillo Interior Derecho -->
+        <div class="plant-group plant-p7">
+          <div class="stem stem-tulip-in">
+            <div class="leaf leaf-r2"></div>
+            <div class="flower-anchor">
+              <div class="flower-head tulip-head">
+                <svg class="tulip-svg" viewBox="0 0 100 120">
+                  <path d="M44 104 C44 114 56 114 56 104 Z" fill="#2d6a24"/>
+                  <path d="M50 16 C34 40 36 86 50 100 C64 86 66 40 50 16 Z" fill="url(#tulipGradC)"/>
+                  <path d="M50 100 C22 86 16 48 35 28 C45 40 48 72 50 100 Z" fill="url(#tulipGradW)"/>
+                  <path d="M50 100 C78 86 84 48 65 28 C55 40 52 72 50 100 Z" fill="url(#tulipGradW)"/>
+                  <path d="M36 38 C28 52 30 74 44 92" stroke="rgba(255,255,255,0.45)" stroke-width="2.8" fill="none" stroke-linecap="round"/>
+                </svg>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Flor 8: Rosa Amarilla Interior Derecha -->
+        <div class="plant-group plant-p8">
+          <div class="stem stem-rose-in">
+            <div class="leaf leaf-r1"></div>
+            <div class="flower-anchor">
+              <div class="flower-head rose-head">
+                <svg class="rose-svg" viewBox="0 0 100 100">
+                  <path d="M50 78 Q30 96 18 100 Q34 85 44 75 Z" fill="#2d6a24"/>
+                  <path d="M50 78 Q70 96 82 100 Q66 85 56 75 Z" fill="#2d6a24"/>
+                  <path d="M50 12 C32 12 16 26 20 46 C24 64 36 78 50 78 C64 78 76 64 80 46 C84 26 68 12 50 12 Z" fill="url(#rPetalSoft1)"/>
+                  <path d="M22 38 C14 54 22 74 42 76 C32 68 28 54 22 38 Z" fill="url(#rPetalSoft2)"/>
+                  <path d="M78 38 C86 54 78 74 58 76 C68 68 72 54 78 38 Z" fill="url(#rPetalSoft2)"/>
+                  <path d="M30 52 C34 72 66 72 70 52 C60 64 40 64 30 52 Z" fill="url(#rPetalSoft1)"/>
+                  <path d="M32 36 C34 24 66 24 68 36 C70 52 60 62 50 62 C40 62 30 52 32 36 Z" fill="#ffd000"/>
+                  <circle cx="50" cy="42" r="16" fill="url(#rGrad1)"/>
+                  <path d="M42 38 C44 30 56 30 58 38 C60 46 52 52 46 48 C42 45 46 39 50 40 C54 41 54 45 51 46" fill="none" stroke="#fffdf0" stroke-width="2.5" stroke-linecap="round"/>
+                </svg>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Flor 9: Tulipán Amarillo Exterior Derecho -->
+        <div class="plant-group plant-p9">
+          <div class="stem stem-tulip-out">
+            <div class="leaf leaf-r2"></div>
+            <div class="flower-anchor">
+              <div class="flower-head tulip-head">
+                <svg class="tulip-svg" viewBox="0 0 100 120">
+                  <path d="M44 104 C44 114 56 114 56 104 Z" fill="#2d6a24"/>
+                  <path d="M50 16 C34 40 36 86 50 100 C64 86 66 40 50 16 Z" fill="url(#tulipGradC)"/>
+                  <path d="M50 100 C22 86 16 48 35 28 C45 40 48 72 50 100 Z" fill="url(#tulipGradW)"/>
+                  <path d="M50 100 C78 86 84 48 65 28 C55 40 52 72 50 100 Z" fill="url(#tulipGradW)"/>
+                  <path d="M36 38 C28 52 30 74 44 92" stroke="rgba(255,255,255,0.45)" stroke-width="2.8" fill="none" stroke-linecap="round"/>
+                </svg>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Flor 10: Margarita / Girasol Silvestre Derecho -->
+        <div class="plant-group plant-p10">
+          <div class="stem stem-wild-r">
+            <div class="leaf leaf-l1"></div>
+            <div class="flower-anchor">
+              <div class="flower-head wild-head">
+                <svg class="wild-sunflower-svg" viewBox="0 0 100 100">
+                  <g fill="url(#wildPetalGrad)">
+                    <ellipse cx="50" cy="18" rx="7" ry="18"/>
+                    <ellipse cx="50" cy="18" rx="7" ry="18" transform="rotate(25.7 50 50)"/>
+                    <ellipse cx="50" cy="18" rx="7" ry="18" transform="rotate(51.4 50 50)"/>
+                    <ellipse cx="50" cy="18" rx="7" ry="18" transform="rotate(77.1 50 50)"/>
+                    <ellipse cx="50" cy="18" rx="7" ry="18" transform="rotate(102.8 50 50)"/>
+                    <ellipse cx="50" cy="18" rx="7" ry="18" transform="rotate(128.5 50 50)"/>
+                    <ellipse cx="50" cy="18" rx="7" ry="18" transform="rotate(154.2 50 50)"/>
+                    <ellipse cx="50" cy="18" rx="7" ry="18" transform="rotate(180 50 50)"/>
+                    <ellipse cx="50" cy="18" rx="7" ry="18" transform="rotate(205.7 50 50)"/>
+                    <ellipse cx="50" cy="18" rx="7" ry="18" transform="rotate(231.4 50 50)"/>
+                    <ellipse cx="50" cy="18" rx="7" ry="18" transform="rotate(257.1 50 50)"/>
+                    <ellipse cx="50" cy="18" rx="7" ry="18" transform="rotate(282.8 50 50)"/>
+                    <ellipse cx="50" cy="18" rx="7" ry="18" transform="rotate(308.5 50 50)"/>
+                    <ellipse cx="50" cy="18" rx="7" ry="18" transform="rotate(334.2 50 50)"/>
+                  </g>
+                  <circle cx="50" cy="50" r="17" fill="url(#wildCenterGrad)"/>
+                  <circle cx="50" cy="50" r="16" fill="none" stroke="#f59e0b" stroke-dasharray="3 3" stroke-width="1.5"/>
+                </svg>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Flor 11: Rosa Amarilla Borde Extremo Derecho -->
+        <div class="plant-group plant-p11">
+          <div class="stem stem-rose-out">
+            <div class="leaf leaf-r1"></div>
+            <div class="flower-anchor">
+              <div class="flower-head rose-head">
+                <svg class="rose-svg" viewBox="0 0 100 100">
+                  <path d="M50 78 Q30 96 18 100 Q34 85 44 75 Z" fill="#2d6a24"/>
+                  <path d="M50 78 Q70 96 82 100 Q66 85 56 75 Z" fill="#2d6a24"/>
+                  <path d="M50 12 C32 12 16 26 20 46 C24 64 36 78 50 78 C64 78 76 64 80 46 C84 26 68 12 50 12 Z" fill="url(#rPetalSoft1)"/>
+                  <path d="M22 38 C14 54 22 74 42 76 C32 68 28 54 22 38 Z" fill="url(#rPetalSoft2)"/>
+                  <path d="M78 38 C86 54 78 74 58 76 C68 68 72 54 78 38 Z" fill="url(#rPetalSoft2)"/>
+                  <path d="M30 52 C34 72 66 72 70 52 C60 64 40 64 30 52 Z" fill="url(#rPetalSoft1)"/>
+                  <path d="M32 36 C34 24 66 24 68 36 C70 52 60 62 50 62 C40 62 30 52 32 36 Z" fill="#ffd000"/>
+                  <circle cx="50" cy="42" r="16" fill="url(#rGrad1)"/>
+                  <path d="M42 38 C44 30 56 30 58 38 C60 46 52 52 46 48 C42 45 46 39 50 40 C54 41 54 45 51 46" fill="none" stroke="#fffdf0" stroke-width="2.5" stroke-linecap="round"/>
+                </svg>
+              </div>
+            </div>
+          </div>
+        </div>
+
+      </div><!-- /garden-growth -->
+    </div><!-- /botanical-scene -->
+
+    <!-- Botonera de acción compacta al ras del fondo -->
+    <footer class="action-bar">
+      <button class="btn btn-primary" id="replantBtn">
+        <!-- <span class="btn-icon">🌱</span> -->
+        <span class="btn-text">Volver a Plantar</span>
+      </button>
+      <button class="btn btn-secondary" id="musicBtn">
+        <!-- <span class="btn-icon" id="musicIcon">🎵</span> -->
+        <span class="btn-text">Música Mágica</span>
+      </button>
+    </footer>
+
+  </main>
+
+  <!-- ========================================================================
+       MODAL DE LA CARTA ROMÁNTICA Y MARCO DE FOTO ADORNADO 💌
+       ======================================================================== -->
+  <div class="letter-modal-backdrop" id="letterModal" role="dialog" aria-modal="true" aria-hidden="true">
+    <div class="letter-modal-card">
+      <button class="modal-close-btn" id="closeLetterBtn" aria-label="Cerrar carta">✕</button>
+
+      <!-- ADORNOS FLORALES DEL CONTORNO DE LA MODAL (GIRASOLES, HOJAS BOTÁNICAS Y FLORES AMARILLAS) -->
+      <div class="modal-floral-decorations" aria-hidden="true">
+        <!-- Esquina Superior Izquierda: Girasol dorado, hoja monstera botánica y acuarela -->
+        <div class="floral-corner floral-corner-tl">
+          <svg class="floral-svg" viewBox="0 0 160 160">
+            <defs>
+              <radialGradient id="wcBlob1" cx="40%" cy="40%" r="60%">
+                <stop offset="0%" stop-color="#f5c29a" stop-opacity="0.6"/>
+                <stop offset="60%" stop-color="#e8a87c" stop-opacity="0.3"/>
+                <stop offset="100%" stop-color="#df9060" stop-opacity="0"/>
+              </radialGradient>
+              <radialGradient id="sunfGrad" cx="50%" cy="50%" r="50%">
+                <stop offset="0%" stop-color="#ffd500"/>
+                <stop offset="65%" stop-color="#ff9500"/>
+                <stop offset="100%" stop-color="#d97706"/>
+              </radialGradient>
+              <radialGradient id="sunfCenter" cx="50%" cy="50%" r="50%">
+                <stop offset="0%" stop-color="#6f3707"/>
+                <stop offset="80%" stop-color="#3d1d03"/>
+              </radialGradient>
+            </defs>
+            <!-- Mancha de acuarela orgánica botánica -->
+            <path d="M20 30 Q5 90 60 110 Q110 120 120 70 Q130 15 70 10 Q30 5 20 30 Z" fill="url(#wcBlob1)"/>
+            <!-- Hoja Monstera botánica lineal -->
+            <g stroke="#3a4b35" stroke-width="2" fill="none" opacity="0.85">
+              <path d="M15 15 C35 35 65 75 90 125"/>
+              <path d="M35 38 Q50 30 65 42"/>
+              <path d="M48 55 Q70 45 85 60"/>
+              <path d="M60 75 Q85 68 100 85"/>
+              <path d="M25 50 Q18 70 35 85"/>
+              <path d="M38 72 Q35 95 55 105"/>
+              <path d="M20 20 C45 5 95 15 125 55 C145 85 135 125 90 125 C55 125 35 105 20 80 C10 60 8 35 20 20 Z"/>
+            </g>
+            <!-- Girasol floreciendo en la esquina -->
+            <g transform="translate(70, 70)">
+              <g fill="url(#sunfGrad)">
+                <ellipse cx="0" cy="-28" rx="7" ry="18"/>
+                <ellipse cx="0" cy="-28" rx="7" ry="18" transform="rotate(30)"/>
+                <ellipse cx="0" cy="-28" rx="7" ry="18" transform="rotate(60)"/>
+                <ellipse cx="0" cy="-28" rx="7" ry="18" transform="rotate(90)"/>
+                <ellipse cx="0" cy="-28" rx="7" ry="18" transform="rotate(120)"/>
+                <ellipse cx="0" cy="-28" rx="7" ry="18" transform="rotate(150)"/>
+                <ellipse cx="0" cy="-28" rx="7" ry="18" transform="rotate(180)"/>
+                <ellipse cx="0" cy="-28" rx="7" ry="18" transform="rotate(210)"/>
+                <ellipse cx="0" cy="-28" rx="7" ry="18" transform="rotate(240)"/>
+                <ellipse cx="0" cy="-28" rx="7" ry="18" transform="rotate(270)"/>
+                <ellipse cx="0" cy="-28" rx="7" ry="18" transform="rotate(300)"/>
+                <ellipse cx="0" cy="-28" rx="7" ry="18" transform="rotate(330)"/>
+              </g>
+              <circle cx="0" cy="0" r="15" fill="url(#sunfCenter)"/>
+              <circle cx="0" cy="0" r="14" fill="none" stroke="#ffd000" stroke-dasharray="2 2" stroke-width="1.2"/>
+            </g>
+            <circle cx="125" cy="40" r="8" fill="#ffd700"/>
+            <path d="M125 40 Q135 25 145 35" stroke="#2d5526" stroke-width="2" fill="none"/>
+          </svg>
+        </div>
+
+        <!-- Esquina Superior Derecha: Guirnalda de flores amarillas y hojas -->
+        <div class="floral-corner floral-corner-tr">
+          <svg class="floral-svg" viewBox="0 0 140 140">
+            <defs>
+              <radialGradient id="wcBlob2" cx="50%" cy="50%" r="50%">
+                <stop offset="0%" stop-color="#ffd500" stop-opacity="0.4"/>
+                <stop offset="100%" stop-color="#ffb703" stop-opacity="0"/>
+              </radialGradient>
+            </defs>
+            <circle cx="95" cy="45" r="40" fill="url(#wcBlob2)"/>
+            <path d="M125 15 Q75 35 40 85" stroke="#3d6830" stroke-width="2.5" fill="none" stroke-linecap="round"/>
+            <path d="M95 30 Q115 20 120 32" fill="#4d7c3d"/>
+            <path d="M75 48 Q60 35 65 22" fill="#4d7c3d"/>
+            <path d="M55 70 Q40 60 38 45" fill="#4d7c3d"/>
+            <g transform="translate(95, 30)">
+              <circle cx="0" cy="0" r="12" fill="#ffc700"/>
+              <circle cx="0" cy="0" r="6" fill="#844a08"/>
+            </g>
+            <g transform="translate(62, 56)">
+              <circle cx="0" cy="0" r="9" fill="#ffda44"/>
+              <circle cx="0" cy="0" r="4.5" fill="#995208"/>
+            </g>
+          </svg>
+        </div>
+
+        <!-- Esquina Inferior Derecha: Gran Girasol, Hoja Monstera y Flores Silvestres -->
+        <div class="floral-corner floral-corner-br">
+          <svg class="floral-svg" viewBox="0 0 170 170">
+            <path d="M40 90 Q20 150 90 160 Q155 165 160 100 Q160 40 100 50 Q50 60 40 90 Z" fill="url(#wcBlob1)"/>
+            <g stroke="#3a4b35" stroke-width="2" fill="none" opacity="0.85">
+              <path d="M155 155 C135 130 100 90 70 40"/>
+              <path d="M130 130 Q110 140 95 125"/>
+              <path d="M115 110 Q90 120 75 105"/>
+              <path d="M98 90 Q75 100 60 82"/>
+              <path d="M140 115 Q145 95 128 80"/>
+              <path d="M125 95 Q130 70 108 60"/>
+              <path d="M150 150 C125 165 75 155 45 115 C25 85 35 45 80 45 C115 45 135 65 150 90 C160 110 162 135 150 150 Z"/>
+            </g>
+            <g transform="translate(94, 94)">
+              <g fill="url(#sunfGrad)">
+                <ellipse cx="0" cy="-30" rx="8" ry="20"/>
+                <ellipse cx="0" cy="-30" rx="8" ry="20" transform="rotate(25.7)"/>
+                <ellipse cx="0" cy="-30" rx="8" ry="20" transform="rotate(51.4)"/>
+                <ellipse cx="0" cy="-30" rx="8" ry="20" transform="rotate(77.1)"/>
+                <ellipse cx="0" cy="-30" rx="8" ry="20" transform="rotate(102.8)"/>
+                <ellipse cx="0" cy="-30" rx="8" ry="20" transform="rotate(128.5)"/>
+                <ellipse cx="0" cy="-30" rx="8" ry="20" transform="rotate(154.2)"/>
+                <ellipse cx="0" cy="-30" rx="8" ry="20" transform="rotate(180)"/>
+                <ellipse cx="0" cy="-30" rx="8" ry="20" transform="rotate(205.7)"/>
+                <ellipse cx="0" cy="-30" rx="8" ry="20" transform="rotate(231.4)"/>
+                <ellipse cx="0" cy="-30" rx="8" ry="20" transform="rotate(257.1)"/>
+                <ellipse cx="0" cy="-30" rx="8" ry="20" transform="rotate(282.8)"/>
+                <ellipse cx="0" cy="-30" rx="8" ry="20" transform="rotate(308.5)"/>
+                <ellipse cx="0" cy="-30" rx="8" ry="20" transform="rotate(334.2)"/>
+              </g>
+              <circle cx="0" cy="0" r="16" fill="url(#sunfCenter)"/>
+              <circle cx="0" cy="0" r="15" fill="none" stroke="#ffd000" stroke-dasharray="2 2" stroke-width="1.2"/>
+            </g>
+          </svg>
+        </div>
+
+        <!-- Esquina Inferior Izquierda: Ramas verdes con flores y capullos -->
+        <div class="floral-corner floral-corner-bl">
+          <svg class="floral-svg" viewBox="0 0 140 140">
+            <path d="M15 125 Q45 85 95 60" stroke="#3d6830" stroke-width="2.5" fill="none" stroke-linecap="round"/>
+            <path d="M40 100 Q30 85 18 85" fill="#4d7c3d"/>
+            <path d="M60 85 Q65 68 80 65" fill="#4d7c3d"/>
+            <path d="M85 68 Q100 52 115 58" fill="#4d7c3d"/>
+            <g transform="translate(42, 98)">
+              <circle cx="0" cy="0" r="11" fill="#ffc700"/>
+              <circle cx="0" cy="0" r="5" fill="#783d06"/>
+            </g>
+            <g transform="translate(75, 76)">
+              <circle cx="0" cy="0" r="8" fill="#ffea55"/>
+              <circle cx="0" cy="0" r="4" fill="#995208"/>
+            </g>
+          </svg>
+        </div>
+      </div>
+
+      <!-- Hoja de carta rayada estilo papel de correspondencia con marco adornado -->
+      <article class="parchment-sheet lined-sheet">
+        <div class="letter-content-layout">
+          
+          <!-- MARCO ADORNADO PARA LA FOTO -->
+          <div class="ornate-photo-container">
+            <div class="ornate-frame">
+              <div class="frame-filigree top"></div>
+              <div class="frame-filigree bottom"></div>
+              <div class="frame-inner-mat">
+                <img id="letterPhoto" src="foto.jpg" alt="Foto especial" />
+                <div class="frame-glass-reflection"></div>
+              </div>
+            </div>
+            <p class="photo-caption" id="photoCaption">Tú y Yo ❤️</p>
+          </div>
+
+          <!-- CUERPO DEL TEXTO ROMÁNTICO EN PAPEL RAYADO -->
+          <div class="letter-text-section">
+            <h3 class="letter-title" id="letterHeading">Mi amor por ti florece cada día</h3>
+            <div class="letter-ornament-divider">❦ 🌻 ❦</div>
+            
+            <div class="letter-paragraphs-wrapper" id="letterParagraphs">
+              <!-- Párrafos inyectados dinámicamente desde CONFIG sobre las líneas rayadas -->
+            </div>
+
+            <div class="letter-closing">
+              <div class="letter-signature-group">
+                <p class="letter-signature" id="letterSignature">Con todo mi amor eterno,</p>
+                <p class="letter-sender" id="letterSender">Tu Persona Favorita</p>
+              </div>
+              <div class="wax-seal">
+                <div class="wax-seal-inner">
+                  <span>💛</span>
+                </div>
+              </div>
+            </div>
+          </div>
+
+        </div>
+
+      </article>
+    </div>
+  </div>
+
+  <script src="script.js"></script>
+</body>
+</html>

@@ -1,0 +1,1729 @@
+/* ==========================================================================
+   ESTILOS PERFECCIONADOS - CAMPO AL RAS DE ABAJO Y TEXTO CASI AL CENTRO
+   ========================================================================== */
+
+:root {
+  --bg-gradient: radial-gradient(circle at 50% 15%, #181332 0%, #0a0817 55%, #030206 100%);
+  --gold-light: #fff8b3;
+  --gold-primary: #ffd700;
+  --gold-warm: #ffb703;
+  --gold-deep: #fb8500;
+  --gold-glow: rgba(255, 215, 0, 0.45);
+
+  --stem-dark: #12330f;
+  --stem-mid: #22561c;
+  --stem-light: #4ea840;
+
+  --meadow-dark: #09210c;
+  --meadow-mid: #103814;
+  --meadow-light: #184e1d;
+
+  --font-title: 'Cinzel', serif;
+  --font-cursive: 'Dancing Script', cursive;
+  --font-body: 'Montserrat', sans-serif;
+  --font-serif: 'Playfair Display', serif;
+
+  /* Alturas de tallos (Desktop por defecto) */
+  --sf-stem-h: 310px;
+  --sf-stem-w: 22px;
+  --tulip-in-stem-h: 245px;
+  --tulip-out-stem-h: 215px;
+  --tulip-stem-w: 11px;
+  --rose-in-stem-h: 195px;
+  --rose-out-stem-h: 165px;
+  --rose-stem-w: 9px;
+  --wild-stem-h: 180px;
+  --wild-stem-w: 8px;
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html, body {
+  width: 100%;
+  height: 100%;
+  overflow: hidden; /* Sin scroll innecesario, ajuste cinematográfico */
+  background: var(--bg-gradient);
+  font-family: var(--font-body);
+  color: #fff;
+  user-select: none;
+}
+
+/* Canvas de fondo */
+#particles-canvas {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  pointer-events: none;
+  z-index: 1;
+}
+
+/* Contenedor principal: Anclado al 100% de la pantalla */
+.garden-container {
+  position: relative;
+  width: 100%;
+  height: 100vh;
+  height: 100dvh;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end; /* TODO EL CAMPO VA AL RAS DE ABAJO */
+  align-items: center;
+  z-index: 2;
+  padding: 0;
+  overflow: hidden;
+}
+
+/* ==========================================================================
+   TEXTOS Y ENCABEZADO: POSICIONADO CASI AL CENTRO
+   ========================================================================== */
+.text-container {
+  position: absolute;
+  top: clamp(60px, 12vh, 120px);
+  left: 50%;
+  transform: translate(-50%, -20px);
+  text-align: center;
+  z-index: 25;
+  width: 90%;
+  max-width: 850px;
+  opacity: 0;
+  transition: opacity 1.8s cubic-bezier(0.2, 0.8, 0.2, 1), transform 1.8s cubic-bezier(0.2, 0.8, 0.2, 1);
+  pointer-events: auto;
+}
+
+.text-container.show-text {
+  opacity: 1;
+  transform: translate(-50%, 0);
+}
+
+.pre-title {
+  font-family: var(--font-serif);
+  font-size: clamp(0.75rem, 1.8vw, 1.15rem);
+  font-style: italic;
+  letter-spacing: 3px;
+  text-transform: uppercase;
+  color: var(--gold-light);
+  margin-bottom: 2px;
+  text-shadow: 0 0 10px var(--gold-glow);
+}
+
+.main-title {
+  font-family: var(--font-title);
+  font-size: clamp(1.8rem, 5.5vw, 4.2rem);
+  font-weight: 900;
+  letter-spacing: 4px;
+  background: linear-gradient(135deg, #ffffff 0%, #fff7a1 25%, #ffd700 55%, #ff9e00 85%, #ffffff 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  filter: drop-shadow(0 0 22px rgba(255, 215, 0, 0.65));
+  animation: titleGleam 5s ease-in-out infinite alternate;
+  line-height: 1.1;
+  margin-bottom: 2px;
+}
+
+.name-wrapper {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  margin: 2px 0 4px;
+}
+
+.recipient-name {
+  font-family: var(--font-cursive);
+  font-size: clamp(2.3rem, 7.5vw, 5rem);
+  font-weight: 700;
+  color: #fffbcf;
+  text-shadow: 
+    0 0 10px #ffd700,
+    0 0 30px #ffa200,
+    0 0 50px rgba(255, 174, 0, 0.7);
+  transform: rotate(-2deg);
+  display: inline-block;
+  animation: namePulse 3.5s ease-in-out infinite alternate;
+}
+
+.heart-icon {
+  font-size: clamp(1.8rem, 5vw, 3.2rem);
+  filter: drop-shadow(0 0 15px rgba(255, 60, 100, 0.8));
+  animation: heartBeat 1.8s infinite ease-in-out;
+}
+
+.dedication-text {
+  font-family: var(--font-serif);
+  font-size: clamp(0.82rem, 1.8vw, 1.15rem);
+  color: rgba(255, 255, 255, 0.9);
+  font-style: italic;
+  max-width: 640px;
+  margin: 0 auto;
+  line-height: 1.45;
+  text-shadow: 0 2px 8px rgba(0, 0, 0, 0.85);
+}
+
+/* ==========================================================================
+   ESCENARIO BOTÁNICO: AL RAS DE ABAJO (BOTTOM: 0)
+   ========================================================================== */
+.botanical-scene {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  height: clamp(380px, 58vh, 620px);
+  display: flex;
+  justify-content: center;
+  align-items: flex-end;
+  margin: 0;
+  pointer-events: none;
+}
+
+/* Gran halo solar radiante */
+.sun-aura {
+  position: absolute;
+  top: 32%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: clamp(340px, 48vw, 560px);
+  height: clamp(340px, 48vw, 560px);
+  background: radial-gradient(circle at 50% 50%, rgba(255, 215, 0, 0.3) 0%, rgba(255, 165, 0, 0.1) 50%, transparent 75%);
+  border-radius: 50%;
+  filter: blur(40px);
+  pointer-events: none;
+  opacity: 0;
+  transition: opacity 2.5s ease;
+}
+
+.sun-aura.show-aura {
+  opacity: 1;
+}
+
+/* ==========================================================================
+   PRADERA / PASTO COMPLETO AL RAS DE ABAJO (100% ANCHO, 0 HUECO)
+   ========================================================================== */
+.field-ground {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  height: 95px;
+  z-index: 10;
+  pointer-events: none;
+}
+
+.hill-back {
+  position: absolute;
+  bottom: 0;
+  left: -5%;
+  width: 110%;
+  height: 85px;
+  background: radial-gradient(ellipse at 50% 100%, var(--meadow-dark) 0%, #051407 80%, transparent 100%);
+  border-radius: 50% 50% 0 0 / 100% 100% 0 0;
+  opacity: 0.9;
+}
+
+.hill-mid {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  height: 65px;
+  background: linear-gradient(to top, var(--meadow-dark), var(--meadow-mid) 70%, var(--meadow-light));
+  border-radius: 40% 40% 0 0 / 25px 25px 0 0;
+  box-shadow: 0 -5px 25px rgba(0, 0, 0, 0.7);
+}
+
+.hill-front {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  height: 48px;
+  background: linear-gradient(to top, #09200b, #123d15 75%, #1b531e 100%);
+  box-shadow: 0 -2px 15px rgba(0, 0, 0, 0.5);
+}
+
+.grass-svg {
+  position: absolute;
+  top: -35px;
+  left: 0;
+  width: 100%;
+  height: 45px;
+}
+
+.soil-glow {
+  position: absolute;
+  bottom: 15px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 280px;
+  height: 35px;
+  background: radial-gradient(ellipse at 50% 50%, rgba(255, 215, 0, 0.75) 0%, transparent 75%);
+  filter: blur(14px);
+  opacity: 0;
+  transition: opacity 1.2s ease;
+  z-index: 12;
+}
+
+.soil-glow.active {
+  opacity: 1;
+}
+
+/* ==========================================================================
+   12 FLORES SILVESTRES AMARILLAS EN EL CÉSPED
+   ========================================================================== */
+.meadow-flowers {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  height: 65px;
+  z-index: 15;
+}
+
+.wf-item {
+  position: absolute;
+  bottom: 12px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  transform: scale(0);
+  transform-origin: bottom center;
+  transition: transform 1.2s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+.wf-item.bloom {
+  transform: scale(1);
+}
+
+.wf-stem {
+  width: 3px;
+  height: 18px;
+  background: linear-gradient(to top, #143510, #3e9930);
+  border-radius: 2px;
+}
+
+.wf-bloom {
+  width: 15px;
+  height: 15px;
+  background: radial-gradient(circle at 50% 50%, #ffe600 40%, #f59e0b 80%, #b45309 100%);
+  border-radius: 50%;
+  box-shadow: 0 0 8px rgba(255, 215, 0, 0.8);
+  position: relative;
+}
+
+.wf-bloom::before {
+  content: '';
+  position: absolute;
+  top: -3px; left: -3px; right: -3px; bottom: -3px;
+  border-radius: 50%;
+  border: 3px dotted #fff8b3;
+}
+
+.wf-p1 { left: 3%; bottom: 18px; }
+.wf-p2 { left: 10%; bottom: 26px; }
+.wf-p3 { left: 18%; bottom: 15px; }
+.wf-p4 { left: 27%; bottom: 28px; }
+.wf-p5 { left: 36%; bottom: 16px; }
+.wf-p6 { left: 44%; bottom: 29px; }
+.wf-p7 { left: 53%; bottom: 20px; }
+.wf-p8 { left: 62%; bottom: 30px; }
+.wf-p9 { left: 70%; bottom: 15px; }
+.wf-p10 { left: 79%; bottom: 27px; }
+.wf-p11 { left: 88%; bottom: 18px; }
+.wf-p12 { left: 97%; bottom: 25px; }
+
+/* ==========================================================================
+   SEMILLA MÁGICA
+   ========================================================================== */
+.seed-container {
+  position: absolute;
+  top: 10px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 34px;
+  height: 50px;
+  z-index: 30;
+  pointer-events: none;
+  opacity: 0;
+}
+
+.magic-seed {
+  width: 22px;
+  height: 32px;
+  margin: 0 auto;
+  background: radial-gradient(circle at 35% 30%, #fff8b3, #e0a300 65%, #7a4b00 100%);
+  border-radius: 50% 50% 50% 50% / 60% 60% 40% 40%;
+  position: relative;
+  box-shadow: 0 0 18px var(--gold-primary), 0 0 35px rgba(255, 215, 0, 0.7);
+  transform: rotate(35deg);
+}
+
+.seed-glow {
+  position: absolute;
+  top: -10px;
+  left: -10px;
+  right: -10px;
+  bottom: -10px;
+  background: radial-gradient(circle, rgba(255, 235, 120, 0.85), transparent 70%);
+  border-radius: 50%;
+  animation: seedPulse 1.2s infinite alternate ease-in-out;
+}
+
+.seed-container.planting {
+  opacity: 1;
+  animation: plantSeedAnim 2.4s cubic-bezier(0.25, 0.1, 0.25, 1) forwards;
+}
+
+@keyframes plantSeedAnim {
+  0% {
+    top: 20px;
+    opacity: 0;
+    transform: translateX(-50%) scale(0.6) rotate(-15deg);
+  }
+  20% {
+    opacity: 1;
+    transform: translateX(-50%) scale(1.1) rotate(15deg);
+  }
+  65% {
+    transform: translateX(-50%) scale(1) rotate(-8deg);
+  }
+  88% {
+    top: calc(100% - 65px);
+    transform: translateX(-50%) scale(1) rotate(0deg);
+  }
+  94% {
+    top: calc(100% - 40px);
+    transform: translateX(-50%) scale(1.3, 0.7);
+  }
+  100% {
+    top: calc(100% - 35px);
+    opacity: 0;
+    transform: translateX(-50%) scale(0.2);
+  }
+}
+
+/* ==========================================================================
+   SISTEMA DE CRECIMIENTO: 11 FLORES ENRAIZADAS AL RAS DE ABAJO
+   ========================================================================== */
+.garden-growth {
+  position: absolute;
+  bottom: 25px; /* Enraizadas firmemente en el césped */
+  width: 100%;
+  height: 100%;
+  z-index: 8;
+  pointer-events: none;
+}
+
+.plant-group {
+  position: absolute;
+  bottom: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  transform-origin: bottom center;
+}
+
+.stem {
+  position: relative;
+  height: 0px;
+  background: linear-gradient(to right, var(--stem-dark), var(--stem-mid) 45%, var(--stem-light) 90%);
+  border-radius: 10px 10px 0 0;
+  box-shadow: inset 0 0 5px rgba(0, 0, 0, 0.5);
+  transform-origin: bottom center;
+  transition: height 2.2s cubic-bezier(0.25, 1, 0.5, 1);
+}
+
+.leaf {
+  position: absolute;
+  background: radial-gradient(ellipse at 25% 25%, #6dd14b 0%, #2f7223 70%, #153c0f 100%);
+  transform: scale(0);
+  transition: transform 1.2s cubic-bezier(0.34, 1.56, 0.64, 1);
+  box-shadow: inset -1px -1px 4px rgba(0,0,0,0.35), 0 3px 8px rgba(0,0,0,0.25);
+}
+
+.garden-growth.blooming .leaf {
+  transform: scale(1);
+}
+
+.flower-anchor {
+  position: absolute;
+  top: 0;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 10;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.flower-head {
+  transform: scale(0);
+  transform-origin: center center;
+  transition: transform 1.7s cubic-bezier(0.34, 1.45, 0.64, 1);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.garden-growth.blooming .flower-head {
+  transform: scale(1);
+}
+
+/* ==========================================================================
+   1. GIRASOL ENORME Y PERFECTAMENTE CONCÉNTRICO
+   ========================================================================== */
+.plant-sunflower {
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 22;
+}
+
+.garden-growth.growing .plant-sunflower .stem-sunflower {
+  height: var(--sf-stem-h);
+}
+
+.stem-sunflower {
+  width: var(--sf-stem-w);
+  border-radius: 11px 11px 0 0;
+  transition-delay: 0.1s;
+}
+
+.leaf-sf-l1 {
+  width: 85px; height: 52px;
+  bottom: 28%; left: -74px;
+  transform-origin: right bottom;
+  transform: scale(0) rotate(-28deg);
+  border-radius: 100% 0% 100% 10% / 100% 0% 100% 10%;
+  transition-delay: 0.8s;
+}
+.garden-growth.blooming .leaf-sf-l1 { transform: scale(1) rotate(-28deg); }
+
+.leaf-sf-r1 {
+  width: 88px; height: 54px;
+  bottom: 42%; right: -78px;
+  transform-origin: left bottom;
+  transform: scale(0) rotate(28deg);
+  border-radius: 0% 100% 10% 100% / 0% 100% 10% 100%;
+  transition-delay: 0.9s;
+}
+.garden-growth.blooming .leaf-sf-r1 { transform: scale(1) rotate(28deg); }
+
+.leaf-sf-l2 {
+  width: 72px; height: 45px;
+  bottom: 62%; left: -60px;
+  transform-origin: right bottom;
+  transform: scale(0) rotate(-35deg);
+  border-radius: 100% 0% 100% 10% / 100% 0% 100% 10%;
+  transition-delay: 1.1s;
+}
+.garden-growth.blooming .leaf-sf-l2 { transform: scale(1) rotate(-35deg); }
+
+.leaf-sf-r2 {
+  width: 74px; height: 46px;
+  bottom: 76%; right: -62px;
+  transform-origin: left bottom;
+  transform: scale(0) rotate(35deg);
+  border-radius: 0% 100% 10% 100% / 0% 100% 10% 100%;
+  transition-delay: 1.2s;
+}
+.garden-growth.blooming .leaf-sf-r2 { transform: scale(1) rotate(35deg); }
+
+/* Cabeza del Girasol Enorme e Interactivo */
+.plant-sunflower,
+.plant-sunflower .flower-anchor {
+  pointer-events: auto;
+}
+
+.sunflower-head {
+  position: relative;
+  width: 360px;
+  height: 360px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  transform: scale(0);
+  transition-delay: 0.7s;
+  pointer-events: auto;
+  cursor: pointer;
+  touch-action: manipulation;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.sunflower-head:hover {
+  filter: drop-shadow(0 0 20px rgba(255, 215, 0, 0.75));
+}
+
+.sunflower-head.sunflower-pop {
+  animation: sunflowerPop 0.65s cubic-bezier(0.175, 0.885, 0.32, 1.4) !important;
+}
+
+@keyframes sunflowerPop {
+  0% { transform: scale(1); }
+  28% { transform: scale(1.16) rotate(3deg); }
+  55% { transform: scale(0.92) rotate(-2deg); }
+  78% { transform: scale(1.05) rotate(1deg); }
+  100% { transform: scale(1) rotate(0deg); }
+}
+
+.sunflower-halo {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 420px;
+  height: 420px;
+  border-radius: 50%;
+  background: radial-gradient(circle at 50% 50%, rgba(255, 215, 0, 0.45) 0%, rgba(255, 170, 0, 0.16) 50%, transparent 75%);
+  filter: blur(20px);
+  animation: haloBreathe 4s infinite alternate ease-in-out;
+  pointer-events: none;
+}
+
+/* Capas radiales de pétalos con centro absoluto (50%, 50%) */
+.petals-layer {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 0;
+  height: 0;
+  display: block;
+}
+
+.sf-petal {
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  transform-origin: 50% 100%;
+  border-radius: 50% 50% 20% 20% / 80% 80% 20% 20%;
+  box-shadow: 0 4px 10px rgba(184, 115, 51, 0.35);
+}
+
+.petals-outer .sf-petal {
+  width: 34px;
+  height: 155px;
+  margin-left: -17px;
+  background: linear-gradient(to top, #ff8c00 0%, #ffbe0b 35%, #ffea00 80%, #fffda8 100%);
+  filter: drop-shadow(0 3px 6px rgba(0,0,0,0.25));
+}
+
+.petals-middle .sf-petal {
+  width: 28px;
+  height: 132px;
+  margin-left: -14px;
+  background: linear-gradient(to top, #e67300 0%, #ffaa00 35%, #ffd000 80%, #fff799 100%);
+  z-index: 2;
+}
+
+.petals-inner .sf-petal {
+  width: 24px;
+  height: 110px;
+  margin-left: -12px;
+  background: linear-gradient(to top, #b85d00 0%, #ff9500 30%, #ffbe0b 75%, #fff275 100%);
+  z-index: 3;
+}
+
+.sunflower-corona {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 172px;
+  height: 172px;
+  border-radius: 50%;
+  border: 4px dashed #ff9100;
+  opacity: 0.8;
+  z-index: 4;
+  animation: spinSlow 35s linear infinite;
+}
+
+/* Disco de semillas perfectamente simétrico y concéntrico */
+.sunflower-center {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 156px;
+  height: 156px;
+  border-radius: 50%;
+  background: radial-gradient(circle at 50% 50%, #6f3707 0%, #442004 60%, #1e0d02 100%);
+  box-shadow: 
+    inset 0 0 25px #150901,
+    0 0 20px rgba(0, 0, 0, 0.7),
+    0 0 35px rgba(255, 174, 0, 0.45);
+  z-index: 5;
+  overflow: hidden;
+  border: 4px solid #8e4708;
+}
+
+.seed-mesh {
+  position: absolute;
+  top: 0; left: 0;
+  width: 100%;
+  height: 100%;
+  background-image: 
+    radial-gradient(#e0932a 15%, transparent 20%),
+    radial-gradient(#ffc043 15%, transparent 20%);
+  background-size: 8px 8px;
+  background-position: 0 0, 4px 4px;
+  opacity: 0.55;
+}
+
+.seed-concentric-rings {
+  position: absolute;
+  top: 50%; left: 50%;
+  transform: translate(-50%, -50%);
+  width: 120px; height: 120px;
+  border-radius: 50%;
+  border: 2px dashed rgba(255, 180, 50, 0.35);
+  box-shadow: inset 0 0 0 16px rgba(0,0,0,0.1), inset 0 0 0 32px rgba(255, 180, 50, 0.15);
+}
+
+.center-glow {
+  position: absolute;
+  top: 50%; left: 50%;
+  transform: translate(-50%, -50%);
+  width: 50px;
+  height: 50px;
+  background: radial-gradient(circle at 50% 50%, rgba(255, 240, 180, 0.3) 0%, transparent 75%);
+  border-radius: 50%;
+}
+
+/* ==========================================================================
+   2. DISTRIBUCIÓN DE LAS 11 FLORES A LO ANCHO DEL CAMPO
+   ========================================================================== */
+.plant-p1 { left: 4%; transform: rotate(-22deg); z-index: 12; }
+.plant-p2 { left: 13%; transform: rotate(-16deg); z-index: 14; }
+.plant-p3 { left: 22%; transform: rotate(-11deg); z-index: 15; }
+.plant-p4 { left: 31%; transform: rotate(-7deg); z-index: 17; }
+.plant-p5 { left: 41%; transform: rotate(-3deg); z-index: 19; }
+
+.plant-p7 { left: 59%; transform: rotate(3deg); z-index: 19; }
+.plant-p8 { left: 69%; transform: rotate(7deg); z-index: 17; }
+.plant-p9 { left: 78%; transform: rotate(11deg); z-index: 15; }
+.plant-p10 { left: 87%; transform: rotate(16deg); z-index: 14; }
+.plant-p11 { left: 96%; transform: rotate(22deg); z-index: 12; }
+
+/* Alturas de tallos */
+.garden-growth.growing .plant-p1 .stem-rose-out,
+.garden-growth.growing .plant-p11 .stem-rose-out { height: var(--rose-out-stem-h); }
+.stem-rose-out { width: var(--rose-stem-w); transition-delay: 0.55s; }
+
+.garden-growth.growing .plant-p2 .stem-wild-l,
+.garden-growth.growing .plant-p10 .stem-wild-r { height: var(--wild-stem-h); }
+.stem-wild-l, .stem-wild-r { width: var(--wild-stem-w); transition-delay: 0.5s; }
+
+.garden-growth.growing .plant-p3 .stem-tulip-out,
+.garden-growth.growing .plant-p9 .stem-tulip-out { height: var(--tulip-out-stem-h); }
+.stem-tulip-out { width: var(--tulip-stem-w); transition-delay: 0.42s; }
+
+.garden-growth.growing .plant-p4 .stem-rose-in,
+.garden-growth.growing .plant-p8 .stem-rose-in { height: var(--rose-in-stem-h); }
+.stem-rose-in { width: var(--rose-stem-w); transition-delay: 0.38s; }
+
+.garden-growth.growing .plant-p5 .stem-tulip-in,
+.garden-growth.growing .plant-p7 .stem-tulip-in { height: var(--tulip-in-stem-h); }
+.stem-tulip-in { width: var(--tulip-stem-w); transition-delay: 0.28s; }
+
+/* Hojas */
+.leaf-l1, .leaf-l2, .leaf-r1, .leaf-r2 {
+  width: 44px; height: 30px;
+  bottom: 35%; left: -36px;
+  transform-origin: right bottom;
+  transform: scale(0) rotate(-30deg);
+  border-radius: 100% 0% 100% 10% / 100% 0% 100% 10%;
+  transition-delay: 1.0s;
+}
+
+.leaf-r1, .leaf-r2 {
+  left: auto; right: -36px;
+  transform-origin: left bottom;
+  transform: scale(0) rotate(30deg);
+  border-radius: 0% 100% 10% 100% / 0% 100% 10% 100%;
+}
+
+.garden-growth.blooming .leaf-l1,
+.garden-growth.blooming .leaf-l2,
+.garden-growth.blooming .leaf-r1,
+.garden-growth.blooming .leaf-r2 {
+  transform: scale(1);
+}
+
+/* SVGs de Flores */
+.tulip-svg {
+  width: 95px; height: 114px;
+  filter: drop-shadow(0 5px 15px rgba(255, 183, 3, 0.45));
+}
+
+.rose-svg {
+  width: 92px; height: 92px;
+  filter: drop-shadow(0 5px 14px rgba(245, 158, 11, 0.45));
+}
+
+.wild-sunflower-svg {
+  width: 82px; height: 82px;
+  filter: drop-shadow(0 4px 12px rgba(255, 193, 7, 0.45));
+}
+
+/* ==========================================================================
+   ANIMACIÓN DE VAIVÉN CONTINUO (BRISA SUAVE)
+   ========================================================================== */
+.garden-growth.flourish .plant-sunflower { animation: windCenter 6s ease-in-out infinite alternate; }
+.garden-growth.flourish .plant-p1 { animation: windP1 4.8s ease-in-out infinite alternate; }
+.garden-growth.flourish .plant-p2 { animation: windP2 5.1s ease-in-out infinite alternate; }
+.garden-growth.flourish .plant-p3 { animation: windP3 5.4s ease-in-out infinite alternate; }
+.garden-growth.flourish .plant-p4 { animation: windP4 5.2s ease-in-out infinite alternate; }
+.garden-growth.flourish .plant-p5 { animation: windP5 5.6s ease-in-out infinite alternate; }
+.garden-growth.flourish .plant-p7 { animation: windP7 5.8s ease-in-out infinite alternate; }
+.garden-growth.flourish .plant-p8 { animation: windP8 5.0s ease-in-out infinite alternate; }
+.garden-growth.flourish .plant-p9 { animation: windP9 6.0s ease-in-out infinite alternate; }
+.garden-growth.flourish .plant-p10 { animation: windP10 5.2s ease-in-out infinite alternate; }
+.garden-growth.flourish .plant-p11 { animation: windP11 4.9s ease-in-out infinite alternate; }
+
+@keyframes windCenter {
+  0% { transform: translateX(-50%) rotate(0deg); }
+  50% { transform: translateX(-50%) rotate(1.4deg) translateY(-2px); }
+  100% { transform: translateX(-50%) rotate(-1.4deg) translateY(0); }
+}
+
+@keyframes windP1 { 0% { transform: rotate(-22deg); } 100% { transform: rotate(-25deg); } }
+@keyframes windP2 { 0% { transform: rotate(-16deg); } 100% { transform: rotate(-19deg); } }
+@keyframes windP3 { 0% { transform: rotate(-11deg); } 100% { transform: rotate(-14deg); } }
+@keyframes windP4 { 0% { transform: rotate(-7deg); } 100% { transform: rotate(-9.5deg); } }
+@keyframes windP5 { 0% { transform: rotate(-3deg); } 100% { transform: rotate(-5.5deg); } }
+@keyframes windP7 { 0% { transform: rotate(3deg); } 100% { transform: rotate(5.5deg); } }
+@keyframes windP8 { 0% { transform: rotate(7deg); } 100% { transform: rotate(9.5deg); } }
+@keyframes windP9 { 0% { transform: rotate(11deg); } 100% { transform: rotate(14deg); } }
+@keyframes windP10 { 0% { transform: rotate(16deg); } 100% { transform: rotate(19deg); } }
+@keyframes windP11 { 0% { transform: rotate(22deg); } 100% { transform: rotate(25deg); } }
+
+/* ==========================================================================
+   BOTONERA DE ACCIÓN FLOTANTE EN LA BASE
+   ========================================================================== */
+.action-bar {
+  position: absolute;
+  bottom: 12px;
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  gap: 10px;
+  z-index: 40;
+  flex-wrap: nowrap;
+  justify-content: center;
+  align-items: center;
+  width: auto;
+  max-width: 95%;
+  background: rgba(10, 8, 20, 0.45);
+  backdrop-filter: blur(12px);
+  padding: 5px 8px;
+  border-radius: 30px;
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.5);
+}
+
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  padding: 8px 16px;
+  font-family: var(--font-body);
+  font-size: 0.86rem;
+  font-weight: 600;
+  border-radius: 25px;
+  cursor: pointer;
+  border: none;
+  outline: none;
+  transition: all 0.25s cubic-bezier(0.25, 1, 0.5, 1);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.4);
+}
+
+.btn-primary {
+  background: linear-gradient(135deg, #ffd700, #ff9e00);
+  color: #1b1202;
+  box-shadow: 0 4px 16px rgba(255, 215, 0, 0.5);
+}
+
+.btn-primary:hover {
+  transform: translateY(-2px) scale(1.03);
+  box-shadow: 0 6px 20px rgba(255, 215, 0, 0.7);
+}
+
+.btn-secondary {
+  background: rgba(255, 255, 255, 0.14);
+  color: #fff;
+  border: 1px solid rgba(255, 255, 255, 0.22);
+}
+
+.btn-secondary:hover {
+  background: rgba(255, 255, 255, 0.25);
+  transform: translateY(-2px);
+  border-color: var(--gold-light);
+}
+
+.btn:active {
+  transform: translateY(0) scale(0.96);
+}
+
+.btn-icon {
+  font-size: 1rem;
+}
+
+/* ==========================================================================
+   ANIMACIONES GENERALES
+   ========================================================================== */
+@keyframes titleGleam {
+  0% { filter: drop-shadow(0 0 12px rgba(255, 215, 0, 0.4)); }
+  100% { filter: drop-shadow(0 0 30px rgba(255, 215, 0, 0.9)); }
+}
+
+@keyframes namePulse {
+  0% { transform: rotate(-2deg) scale(0.98); }
+  100% { transform: rotate(-1deg) scale(1.02); }
+}
+
+@keyframes heartBeat {
+  0%, 100% { transform: scale(1); }
+  25% { transform: scale(1.18); }
+  40% { transform: scale(1.06); }
+  60% { transform: scale(1.22); }
+}
+
+@keyframes seedPulse {
+  0% { opacity: 0.6; transform: scale(0.9); }
+  100% { opacity: 1; transform: scale(1.15); }
+}
+
+@keyframes haloBreathe {
+  0% { transform: translate(-50%, -50%) scale(0.92); opacity: 0.7; }
+  100% { transform: translate(-50%, -50%) scale(1.08); opacity: 1; }
+}
+
+@keyframes spinSlow {
+  from { transform: translate(-50%, -50%) rotate(0deg); }
+  to { transform: translate(-50%, -50%) rotate(360deg); }
+}
+
+/* ==========================================================================
+   RESPONSIVIDAD MÓVIL Y TABLETS (AL RAS DE ABAJO Y TEXTO CASI AL CENTRO)
+   ========================================================================== */
+
+/* Tablets */
+@media (max-width: 950px) {
+  :root {
+    --sf-stem-h: 265px;
+    --sf-stem-w: 18px;
+    --tulip-in-stem-h: 210px;
+    --tulip-out-stem-h: 185px;
+    --tulip-stem-w: 10px;
+    --rose-in-stem-h: 170px;
+    --rose-out-stem-h: 145px;
+    --rose-stem-w: 8px;
+    --wild-stem-h: 155px;
+  }
+
+  .text-container {
+    top: clamp(40px, 9vh, 80px);
+  }
+
+  .sunflower-head { width: 280px; height: 280px; }
+  .sunflower-halo { width: 330px; height: 330px; }
+  .sunflower-center { width: 122px; height: 122px; }
+  .sunflower-corona { width: 132px; height: 132px; }
+  .petals-outer .sf-petal { width: 27px; height: 120px; margin-left: -13.5px; }
+  .petals-middle .sf-petal { width: 22px; height: 104px; margin-left: -11px; }
+  .petals-inner .sf-petal { width: 18px; height: 86px; margin-left: -9px; }
+
+  .tulip-svg { width: 78px; height: 94px; }
+  .rose-svg { width: 76px; height: 76px; }
+  .wild-sunflower-svg { width: 68px; height: 68px; }
+}
+
+/* SMARTPHONES / MÓVILES (< 640px): AL RAS DE ABAJO Y TEXTO CASI AL CENTRO */
+@media (max-width: 640px) {
+  :root {
+    --sf-stem-h: 230px;
+    --sf-stem-w: 14px;
+    --tulip-in-stem-h: 180px;
+    --tulip-out-stem-h: 155px;
+    --tulip-stem-w: 8px;
+    --rose-in-stem-h: 140px;
+    --rose-out-stem-h: 120px;
+    --rose-stem-w: 7px;
+    --wild-stem-h: 130px;
+  }
+
+  /* 1. TEXTO CASI AL CENTRO */
+  .text-container {
+    top: clamp(14%, 20vh, 26%); /* BAJADO CASI AL CENTRO DE LA PANTALLA */
+    width: 92%;
+    max-width: 390px;
+  }
+
+  /* 2. ESCENA BOTÁNICA Y CAMPO AL RAS DE ABAJO (CERO ESPACIO NEGRO INFERIOR) */
+  .botanical-scene {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: clamp(340px, 52vh, 440px); /* Ocupa exactamente la mitad inferior */
+    margin: 0;
+  }
+
+  .field-ground {
+    bottom: 0;
+    height: 85px;
+  }
+
+  .garden-growth {
+    bottom: 20px; /* Enraizadas al fondo */
+  }
+
+  /* Distribución escalonada para que las 11 flores quepan impecablemente */
+  .plant-p1 { left: 2%; transform: rotate(-22deg) scale(0.62); }
+  .plant-p2 { left: 11%; transform: rotate(-16deg) scale(0.68); }
+  .plant-p3 { left: 20%; transform: rotate(-11deg) scale(0.74); }
+  .plant-p4 { left: 30%; transform: rotate(-7deg) scale(0.80); }
+  .plant-p5 { left: 40%; transform: rotate(-3deg) scale(0.86); }
+  .plant-sunflower { left: 50%; transform: translateX(-50%) scale(0.88); }
+  .plant-p7 { left: 60%; transform: rotate(3deg) scale(0.86); }
+  .plant-p8 { left: 70%; transform: rotate(7deg) scale(0.80); }
+  .plant-p9 { left: 80%; transform: rotate(11deg) scale(0.74); }
+  .plant-p10 { left: 89%; transform: rotate(16deg) scale(0.68); }
+  .plant-p11 { left: 98%; transform: rotate(22deg) scale(0.62); }
+
+  .sunflower-head { width: 230px; height: 230px; }
+  .sunflower-halo { width: 270px; height: 270px; }
+  .sunflower-center { width: 100px; height: 100px; }
+  .sunflower-corona { width: 110px; height: 110px; }
+  .petals-outer .sf-petal { width: 22px; height: 98px; margin-left: -11px; }
+  .petals-middle .sf-petal { width: 18px; height: 85px; margin-left: -9px; }
+  .petals-inner .sf-petal { width: 15px; height: 70px; margin-left: -7.5px; }
+
+  .tulip-svg { width: 62px; height: 74px; }
+  .rose-svg { width: 60px; height: 60px; }
+  .wild-sunflower-svg { width: 54px; height: 54px; }
+
+  /* 3. BOTONERA MÓVIL AL RAS DE ABAJO */
+  .action-bar {
+    bottom: 8px;
+    width: 94%;
+    padding: 4px 6px;
+    gap: 4px;
+  }
+
+  .btn {
+    padding: 6px 9px;
+    font-size: 0.74rem;
+    gap: 3px;
+    flex: 1;
+    white-space: nowrap;
+  }
+
+  .btn-icon {
+    font-size: 0.82rem;
+  }
+}
+
+/* Teléfonos muy pequeños (<= 380px) */
+@media (max-width: 380px) {
+  .text-container {
+    top: clamp(12%, 18vh, 22%);
+  }
+  .btn-text {
+    font-size: 0.68rem;
+  }
+  .action-bar {
+    gap: 3px;
+    padding: 3px 4px;
+  }
+  .btn {
+    padding: 5px 6px;
+  }
+}
+
+/* ==========================================================================
+   BOTÓN FLOTANTE: SOBRE DE CARTA REAL 💌
+   ========================================================================== */
+.floating-envelope-btn {
+  position: fixed;
+  bottom: 24px;
+  right: 24px;
+  z-index: 65;
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 6px;
+  padding: 6px;
+  outline: none;
+  touch-action: manipulation;
+  -webkit-tap-highlight-color: transparent;
+  transition: transform 0.35s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+  animation: envelopeFloat 3.8s ease-in-out infinite alternate;
+}
+
+@keyframes envelopeFloat {
+  0% { transform: translateY(0) rotate(0deg); }
+  50% { transform: translateY(-7px) rotate(-1.5deg); }
+  100% { transform: translateY(-12px) rotate(1.5deg); }
+}
+
+.floating-envelope-btn:hover,
+.floating-envelope-btn:focus-visible {
+  transform: translateY(-10px) scale(1.08);
+}
+
+.floating-envelope-btn:active {
+  transform: translateY(-2px) scale(0.96);
+}
+
+.envelope-glow {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 110px;
+  height: 85px;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(255, 215, 0, 0.65) 0%, rgba(255, 160, 0, 0.25) 55%, transparent 75%);
+  filter: blur(14px);
+  pointer-events: none;
+  animation: haloBreathe 2.8s infinite alternate ease-in-out;
+}
+
+.envelope-card-container {
+  position: relative;
+  width: 80px;
+  height: 54px;
+  filter: drop-shadow(0 8px 18px rgba(0, 0, 0, 0.55));
+}
+
+/* Hoja de carta que PERMANECE OCULTA DENTRO DEL SOBRE por defecto, y SOLO SE ASOMA EN HOVER */
+.envelope-paper-peek {
+  position: absolute;
+  top: 8px;
+  left: 8px;
+  width: 64px;
+  height: 42px;
+  background: #fffdf6;
+  border-radius: 4px 4px 0 0;
+  border: 1px solid #d4af37;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding: 5px 8px;
+  gap: 4px;
+  z-index: 2;
+  transform: translateY(0);
+  opacity: 0;
+  pointer-events: none;
+  transition: transform 0.45s cubic-bezier(0.175, 0.885, 0.32, 1.275), opacity 0.25s ease;
+}
+
+/* Solo se eleva y se vuelve visible al pasar el mouse (hover) o enfocar */
+.floating-envelope-btn:hover .envelope-paper-peek,
+.floating-envelope-btn:focus-visible .envelope-paper-peek,
+.floating-envelope-btn:active .envelope-paper-peek {
+  transform: translateY(-26px);
+  opacity: 1;
+}
+
+.peek-line {
+  width: 100%;
+  height: 2px;
+  background: rgba(184, 134, 11, 0.45);
+  border-radius: 1px;
+}
+
+.peek-line.short {
+  width: 65%;
+}
+
+.peek-heart {
+  position: absolute;
+  top: 4px;
+  right: 6px;
+  font-size: 0.65rem;
+  line-height: 1;
+}
+
+/* Estructura del sobre postal */
+.envelope-structure {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  z-index: 3;
+}
+
+.envelope-back {
+  position: absolute;
+  top: 0; left: 0;
+  width: 100%; height: 100%;
+  background: linear-gradient(135deg, #e8c988 0%, #dfba70 100%);
+  border-radius: 6px;
+  border: 1.5px solid #b8860b;
+  z-index: 1;
+}
+
+/* Bolsillo frontal triangular */
+.envelope-pocket {
+  position: absolute;
+  top: 0; left: 0;
+  width: 100%; height: 100%;
+  background: linear-gradient(135deg, #fdf4db 0%, #f6e3b2 45%, #eed291 100%);
+  clip-path: polygon(0% 0%, 50% 50%, 100% 0%, 100% 100%, 0% 100%);
+  border-radius: 6px;
+  border-bottom: 2px solid #b8860b;
+  border-left: 1.5px solid #b8860b;
+  border-right: 1.5px solid #b8860b;
+  z-index: 4;
+  box-shadow: inset 0 2px 6px rgba(184, 134, 11, 0.3);
+}
+
+/* Solapa superior plegable: Cerrada por defecto */
+.envelope-flap {
+  position: absolute;
+  top: 0; left: 0;
+  width: 100%; height: 50%;
+  background: linear-gradient(to bottom, #fff0c7 0%, #ebd08f 100%);
+  clip-path: polygon(0% 0%, 100% 0%, 50% 100%);
+  transform-origin: top center;
+  transform: rotateX(0deg);
+  transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+  z-index: 5;
+}
+
+/* Al hacer hover, la solapa se levanta */
+.floating-envelope-btn:hover .envelope-flap,
+.floating-envelope-btn:focus-visible .envelope-flap,
+.floating-envelope-btn:active .envelope-flap {
+  transform: rotateX(160deg);
+  z-index: 1;
+}
+
+/* Sello de cera en forma de corazón */
+.envelope-wax-seal {
+  position: absolute;
+  top: 48%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 22px;
+  height: 22px;
+  border-radius: 50%;
+  background: radial-gradient(circle at 35% 35%, #ef4444 0%, #b91c1c 70%, #7f1d1d 100%);
+  border: 1.5px solid #fca5a5;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.4), inset 0 1px 2px rgba(255, 255, 255, 0.4);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 6;
+  transition: transform 0.35s ease, opacity 0.3s ease;
+}
+
+.floating-envelope-btn:hover .envelope-wax-seal,
+.floating-envelope-btn:focus-visible .envelope-wax-seal,
+.floating-envelope-btn:active .envelope-wax-seal {
+  transform: translate(-50%, -130%) scale(0.9);
+  opacity: 0;
+}
+
+.wax-heart {
+  font-size: 0.65rem;
+  filter: drop-shadow(0 1px 1px rgba(0,0,0,0.3));
+}
+
+/* Etiqueta / rótulo bajo el sobre */
+.envelope-label {
+  background: linear-gradient(135deg, #ffd700 0%, #ff9500 100%);
+  border: 1.5px solid #fffdf0;
+  border-radius: 20px;
+  padding: 4px 12px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.45), 0 0 12px rgba(255, 215, 0, 0.5);
+  transition: all 0.25s ease;
+}
+
+.envelope-label span {
+  font-family: var(--font-body);
+  font-size: 0.72rem;
+  font-weight: 700;
+  color: #2b1702;
+  letter-spacing: 0.5px;
+  text-transform: uppercase;
+}
+
+@media (max-width: 640px) {
+  .floating-envelope-btn {
+    bottom: 56px;
+    right: 12px;
+    gap: 4px;
+  }
+  .envelope-card-container {
+    width: 68px;
+    height: 46px;
+  }
+  .envelope-paper-peek {
+    width: 54px;
+    height: 34px;
+    left: 7px;
+  }
+  .floating-envelope-btn:hover .envelope-paper-peek,
+  .floating-envelope-btn:active .envelope-paper-peek {
+    transform: translateY(-22px);
+  }
+  .envelope-label {
+    padding: 2px 8px;
+  }
+  .envelope-label span {
+    font-size: 0.65rem;
+  }
+}
+
+/* ==========================================================================
+   MODAL DE LA CARTA ROMÁNTICA Y MARCO ADORNADO
+   ========================================================================== */
+.letter-modal-backdrop {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  height: 100dvh;
+  background: rgba(5, 4, 10, 0.82);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  z-index: 100;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 15px;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.4s ease;
+}
+
+.letter-modal-backdrop.open {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+.letter-modal-card {
+  position: relative;
+  width: 100%;
+  max-width: 870px;
+  max-height: 90vh;
+  max-height: 90dvh;
+  transform: scale(0.88) translateY(20px);
+  transition: transform 0.45s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+.letter-modal-backdrop.open .letter-modal-card {
+  transform: scale(1) translateY(0);
+}
+
+/* Botón de cierre */
+.modal-close-btn {
+  position: absolute;
+  top: -14px;
+  right: -14px;
+  width: 38px;
+  height: 38px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, #ffd700, #ff9e00);
+  border: 2px solid #fff;
+  color: #1a0f02;
+  font-size: 1.1rem;
+  font-weight: 700;
+  cursor: pointer;
+  z-index: 35;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.6);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  transition: all 0.25s ease;
+}
+
+.modal-close-btn:hover {
+  transform: scale(1.15) rotate(90deg);
+  background: #ff5252;
+  color: #fff;
+}
+
+/* ==========================================================================
+   ADORNOS FLORALES DEL CONTORNO DE LA MODAL
+   ========================================================================== */
+.modal-floral-decorations {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  z-index: 30;
+  overflow: visible;
+}
+
+.floral-corner {
+  position: absolute;
+  pointer-events: none;
+  filter: drop-shadow(0 6px 14px rgba(0, 0, 0, 0.42));
+  transition: transform 0.4s ease;
+}
+
+.floral-corner-tl {
+  top: -38px;
+  left: -38px;
+  width: 155px;
+  height: 155px;
+}
+
+.floral-corner-tr {
+  top: -28px;
+  right: -28px;
+  width: 130px;
+  height: 130px;
+}
+
+.floral-corner-br {
+  bottom: -40px;
+  right: -40px;
+  width: 165px;
+  height: 165px;
+}
+
+.floral-corner-bl {
+  bottom: -28px;
+  left: -28px;
+  width: 130px;
+  height: 130px;
+}
+
+.floral-svg {
+  width: 100%;
+  height: 100%;
+  display: block;
+}
+
+@media (max-width: 768px) {
+  .floral-corner-tl {
+    top: -18px;
+    left: -18px;
+    width: 85px;
+    height: 85px;
+  }
+  .floral-corner-tr {
+    top: -14px;
+    right: -14px;
+    width: 68px;
+    height: 68px;
+  }
+  .floral-corner-br {
+    bottom: -18px;
+    right: -18px;
+    width: 85px;
+    height: 85px;
+  }
+  .floral-corner-bl {
+    bottom: -14px;
+    left: -14px;
+    width: 68px;
+    height: 68px;
+  }
+}
+
+/* ==========================================================================
+   HOJA RAYADA ESTILO PAPEL DE CARTA (STATIONERY LINED PAPER)
+   ========================================================================== */
+.parchment-sheet.lined-sheet {
+  position: relative;
+  background: radial-gradient(ellipse at 50% 35%, #fffef9 0%, #fcf8ee 60%, #f7ecd2 100%);
+  border-radius: 18px;
+  padding: 38px 32px 36px 32px;
+  box-shadow: 
+    0 22px 70px rgba(0, 0, 0, 0.85),
+    0 0 45px rgba(255, 215, 0, 0.28),
+    inset 0 0 35px rgba(195, 145, 90, 0.16);
+  border: 3px solid #d4af37;
+  outline: 5px solid rgba(212, 175, 55, 0.25);
+  outline-offset: 4px;
+  color: #38240f;
+  overflow-y: auto;
+  max-height: 85vh;
+  max-height: 85dvh;
+}
+
+/* Distribución de la carta (Foto + Texto) */
+.letter-content-layout {
+  position: relative;
+  z-index: 2;
+  display: grid;
+  grid-template-columns: 270px 1fr;
+  gap: 30px;
+  align-items: flex-start;
+}
+
+/* ==========================================================================
+   MARCO ADORNADO PARA LA FOTO
+   ========================================================================== */
+.ornate-photo-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  z-index: 3;
+}
+
+.ornate-frame {
+  position: relative;
+  width: 230px;
+  height: 290px;
+  padding: 12px;
+  background: linear-gradient(135deg, #ffd700 0%, #b8860b 30%, #ffd700 50%, #8a6208 80%, #ffd700 100%);
+  border-radius: 12px;
+  box-shadow: 
+    0 10px 30px rgba(0, 0, 0, 0.55),
+    inset 0 0 10px rgba(0, 0, 0, 0.4),
+    0 0 20px rgba(255, 215, 0, 0.35);
+  border: 3px solid #634305;
+}
+
+.frame-filigree {
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 60px;
+  height: 16px;
+  background: radial-gradient(ellipse, #ffd700 0%, #b8860b 80%, transparent 100%);
+  border-radius: 50%;
+  box-shadow: 0 0 8px #ffd700;
+}
+
+.frame-filigree.top { top: -8px; }
+.frame-filigree.bottom { bottom: -8px; }
+
+.frame-inner-mat {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  border-radius: 6px;
+  overflow: hidden;
+  border: 4px solid #331d09;
+  box-shadow: inset 0 0 15px rgba(0, 0, 0, 0.6);
+  background: #1f1105;
+}
+
+.frame-inner-mat img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+  transition: transform 0.5s ease;
+}
+
+.frame-inner-mat:hover img {
+  transform: scale(1.05);
+}
+
+.frame-glass-reflection {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(135deg, rgba(255, 255, 255, 0.25) 0%, rgba(255, 255, 255, 0.05) 45%, transparent 50%);
+  pointer-events: none;
+}
+
+.photo-caption {
+  font-family: var(--font-cursive);
+  font-size: 1.45rem;
+  font-weight: 700;
+  color: #78350f;
+  margin-top: 10px;
+  text-align: center;
+  text-shadow: 0 1px 2px rgba(255, 255, 255, 0.8);
+}
+
+/* ==========================================================================
+   CUERPO DE LA CARTA (PÁRRAFOS CON RENGLONES DE PAPELERÍA PERFECTOS)
+   ========================================================================== */
+.letter-text-section {
+  display: flex;
+  flex-direction: column;
+  z-index: 3;
+}
+
+.letter-title {
+  font-family: var(--font-serif);
+  font-size: clamp(1.4rem, 2.5vw, 1.85rem);
+  font-weight: 700;
+  color: #632d04;
+  line-height: 1.3;
+  margin-bottom: 6px;
+}
+
+.letter-ornament-divider {
+  font-size: 1.1rem;
+  color: #b8860b;
+  margin-bottom: 18px;
+  letter-spacing: 4px;
+}
+
+.letter-paragraphs-wrapper {
+  display: flex;
+  flex-direction: column;
+  gap: 22px;
+}
+
+/* CADA RENGLÓN DESCANSA EXACTAMENTE SOBRE UNA LÍNEA DE PAPELERÍA */
+.letter-paragraph {
+  position: relative;
+  font-family: var(--font-body);
+  font-size: clamp(0.92rem, 1.4vw, 1.02rem);
+  line-height: 2.35rem; /* ~37.6px */
+  color: #38200b;
+  text-align: justify;
+  margin: 0;
+  padding: 0 0 2px 0;
+  
+  /* Línea horizontal continua debajo de cada renglón de texto */
+  background-image: linear-gradient(
+    to bottom,
+    transparent 0,
+    transparent calc(2.35rem - 1.5px),
+    rgba(188, 142, 92, 0.42) calc(2.35rem - 1.5px),
+    rgba(188, 142, 92, 0.42) 2.35rem
+  );
+  background-size: 100% 2.35rem;
+}
+
+.letter-closing {
+  margin-top: 26px;
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  gap: 20px;
+}
+
+.letter-signature-group {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+}
+
+.letter-signature {
+  font-family: var(--font-serif);
+  font-size: 0.95rem;
+  font-style: italic;
+  color: #78350f;
+}
+
+.letter-sender {
+  font-family: var(--font-cursive);
+  font-size: clamp(1.6rem, 2.8vw, 2.2rem);
+  font-weight: 700;
+  color: #b45309;
+  margin-top: 2px;
+}
+
+/* Sello de cera: Integrado al pie de la firma, nunca tapa el texto */
+.wax-seal {
+  position: static;
+  width: 46px;
+  height: 46px;
+  background: radial-gradient(circle at 40% 35%, #e11d48, #9f1239 70%, #4c0519 100%);
+  border-radius: 50%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.4), inset 0 0 6px rgba(255,255,255,0.3);
+  border: 2px solid #fda4af;
+  transform: rotate(-10deg);
+  flex-shrink: 0;
+}
+
+.wax-seal-inner {
+  font-size: 1.15rem;
+  filter: drop-shadow(0 1px 2px rgba(0,0,0,0.4));
+}
+
+/* Adaptación responsive del modal para móviles */
+@media (max-width: 768px) {
+  .parchment-sheet.lined-sheet {
+    padding: 24px 16px 30px 16px;
+  }
+
+  .letter-content-layout {
+    grid-template-columns: 1fr;
+    gap: 16px;
+  }
+
+  .ornate-photo-container {
+    width: 100%;
+  }
+
+  .ornate-frame {
+    width: 190px;
+    height: 240px;
+    padding: 10px;
+  }
+
+  .photo-caption {
+    font-size: 1.25rem;
+    margin-top: 6px;
+  }
+
+  .letter-title {
+    text-align: center;
+    font-size: 1.45rem;
+  }
+
+  .letter-ornament-divider {
+    text-align: center;
+    margin-bottom: 12px;
+  }
+
+  .letter-paragraphs-wrapper {
+    gap: 18px;
+  }
+
+  .letter-paragraph {
+    font-size: 0.94rem;
+    line-height: 2.25rem;
+    text-align: left;
+    background-image: linear-gradient(
+      to bottom,
+      transparent 0,
+      transparent calc(2.25rem - 1.5px),
+      rgba(188, 142, 92, 0.42) calc(2.25rem - 1.5px),
+      rgba(188, 142, 92, 0.42) 2.25rem
+    );
+    background-size: 100% 2.25rem;
+  }
+
+  .letter-closing {
+    justify-content: space-between;
+    margin-top: 20px;
+    padding-top: 10px;
+    border-top: 1px dashed rgba(188, 142, 92, 0.35);
+  }
+
+  .letter-signature-group {
+    align-items: flex-start;
+    text-align: left;
+  }
+
+  .wax-seal {
+    width: 40px;
+    height: 40px;
+  }
+
+  .wax-seal-inner {
+    font-size: 1rem;
+  }
+}
+
